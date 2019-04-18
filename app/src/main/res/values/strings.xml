@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MobileSafe</string>
+
+    <string name="main_tools">工具箱</string>
+    <string name="main_optimization">系统优化</string>
+    <string name="main_appmanager">应用管理</string>
+
+</resources>

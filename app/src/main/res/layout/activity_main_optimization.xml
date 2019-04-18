@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:background="@drawable/blue_bkg"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:src="@drawable/dx_score_unknown"/>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical"
+            android:paddingTop="10dp">
+            
+            <TextView
+                android:id="@+id/tv_tip_optimization"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_marginLeft="20dp"
+                android:text="你的手机未进行优化"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="全面检测，一键优化"
+                android:textColor="@color/gray"
+                android:textSize="18sp"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="left|center"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:text="大师检测"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:background="@drawable/doctor_check_selector"/>
+            
+        </LinearLayout>
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingTop="5dp">
+
+        <include layout="@layout/layout_optimization" />
+
+    </LinearLayout>
+
+</LinearLayout>

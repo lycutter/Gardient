@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/toolbox_item_bkg_pressed"
+    android:orientation="horizontal"
+    android:paddingLeft="10dp">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ly_speed"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/item_gride_selector"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/dx_app_mgr_main_uninstall" />
+
+                <TextView
+                    android:id="@+id/tv_mainshow_obstacle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="应用卸载"
+                    android:textColor="#2d3e66"
+                    android:textSize="20dip" />
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="2dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/item_gride_selector"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/dx_app_mgr_main_update" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="应用升级"
+                    android:textColor="#2d3e66"
+                    android:textSize="20dip" />
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="2dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/item_gride_selector"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/dx_app_mgr_main_rank" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="耗电检测"
+                    android:textColor="#2d3e66"
+                    android:textSize="20dip" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/item_gride_selector"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/dx_app_mgr_main_category" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="分类整理"
+                    android:textColor="#2d3e66"
+                    android:textSize="20dip" />
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/item_gride_selector"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/dx_app_mgr_main_app2sd" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="应用搬家"
+                    android:textColor="#2d3e66"
+                    android:textSize="20dip" />
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/item_gride_selector"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/dx_app_mgr_main_appmgr" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="应用管理"
+                    android:textColor="#2d3e66"
+                    android:textSize="20dip" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

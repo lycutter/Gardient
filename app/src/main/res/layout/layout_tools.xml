@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:paddingTop="10dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ly_speed"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/press_btn_tools"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/toolbox_icon_flashlight" />
+
+                <TextView
+                    android:id="@+id/tv_mainshow_obstacle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="手电筒"
+                    android:textColor="#2d3e66"
+                    android:textSize="16dip" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ly_filemanager"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="2dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/press_btn_tools"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/toolbox_icon_filemanager" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="文件管理"
+                    android:textColor="#2d3e66"
+                    android:textSize="16dip" />
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="2dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/press_btn_tools"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/toolbox_icon_location" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="号码归属地"
+                    android:textColor="#2d3e66"
+                    android:textSize="16dip" />
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="2dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/press_btn_tools"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/toolbox_icon_calculator" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="计算器 "
+                    android:textColor="#2d3e66"
+                    android:textSize="16dip" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/press_btn_tools"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/toolbox_icon_netflow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="流量查询"
+                    android:textColor="#2d3e66"
+                    android:textSize="16dip" />
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/press_btn_tools"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/toolbox_icon_memorymgr" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="内存管理"
+                    android:textColor="#2d3e66"
+                    android:textSize="16dip" />
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/press_btn_tools"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/toolbox_icon_shortcut" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="快捷方式"
+                    android:textColor="#2d3e66"
+                    android:textSize="16dip" />
+            </LinearLayout>
+
+
+            <LinearLayout
+
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/press_btn_tools"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/toolbox_icon_hardware" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="硬件检测"
+                    android:textColor="#2d3e66"
+                    android:textSize="16dip" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/press_btn_tools"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/toolbox_icon_benchmark" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="性能评测"
+                    android:textColor="#2d3e66"
+                    android:textSize="16dip" />
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/press_btn_tools"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/toolbox_icon_dialer" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="点心拨号"
+                    android:textColor="#2d3e66"
+                    android:textSize="16dip" />
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/press_btn_tools"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/toolbox_icon_launcher" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="点心桌面"
+                    android:textColor="#2d3e66"
+                    android:textSize="16dip" />
+            </LinearLayout>
+
+
+            <LinearLayout
+
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/press_btn_tools"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/toolbox_icon_clock" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="点心闹钟"
+                    android:textColor="#2d3e66"
+                    android:textSize="16dip" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
