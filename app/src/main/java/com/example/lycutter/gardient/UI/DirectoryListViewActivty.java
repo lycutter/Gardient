@@ -34,6 +34,7 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
     public static final String defaultPath = "/sdcard";
     private DirectoryInfo directoryInfo;
     private DirectoryListAdapter directoryListAdapter;
+    File mFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
     }
 
     private void createFileListView(final DirectoryInfo mDirectoryInfo) {
-        directoryListAdapter = new DirectoryListAdapter(this, mDirectoryInfo);
+        directoryListAdapter = new DirectoryListAdapter(this, mDirectoryInfo, mDirectoryInfo.currentDirectory + "/");
         directoryListView.setAdapter(directoryListAdapter);
         directoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -102,12 +103,14 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
     private class DirectoryListAdapter extends BaseAdapter {
 
         private ArrayList<String> directoryName, childAmount;
+        String completedFilePath;
         private LayoutInflater mInflater;
 
-        public DirectoryListAdapter(Context context, DirectoryInfo directoryInfo) {
+        public DirectoryListAdapter(Context context, DirectoryInfo directoryInfo, String completedPath) {
             mInflater = LayoutInflater.from(context);
             directoryName = directoryInfo.directoryName;
             childAmount = directoryInfo.childDirectoryContain;
+            completedFilePath = completedPath;
         }
 
         @Override
@@ -118,26 +121,41 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
         @Override
         public Object getItem(int position) {
             return null;
+//            return directoryName.get(position);
         }
 
         @Override
         public long getItemId(int position) {
             return 0;
+//            return position;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder = new ViewHolder();
+
+            ViewHolder viewHolder = null;
+            viewHolder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.directorty_list_items, null);
             viewHolder.directoryImage = convertView.findViewById(R.id.directory_item_image);
             viewHolder.directoryName = convertView.findViewById(R.id.directory_item_name);
             viewHolder.directoryChildAmount = convertView.findViewById(R.id.directory_item_childamount);
 
             viewHolder.directoryName.setText(directoryName.get(position));
+
+            mFile = new File(completedFilePath + directoryName.get(position));
+
+            if (directoryName.contains("com.google.android.apps.nexuslaun")) {
+                System.out.println("long name = " + completedFilePath);
+                System.out.println("short name = " + directoryName.get(position));
+            }
+
             viewHolder.directoryChildAmount.setText(childAmount.get(position));
-            viewHolder.directoryImage.setImageResource(R.drawable.ic_dxhome_file_manager);
+            if (!mFile.isDirectory()) {
+                viewHolder.directoryImage.setImageResource(R.drawable.file_image);
+            } else {
+                viewHolder.directoryImage.setImageResource(R.drawable.ic_dxhome_file_manager);
 
-
+            }
             return convertView;
         }
 

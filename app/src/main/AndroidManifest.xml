@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".UI.DirectoryListViewActivty"></activity>
+        <activity android:name=".UI.UserCenterActivity"/>
     </application>
 
 </manifest>

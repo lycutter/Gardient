@@ -97,7 +97,6 @@ public class MainActivity extends Activity implements View.OnClickListener, View
      */
     public void initPage() {
         ly_filemanager = viewTools.findViewById(R.id.ly_filemanager);
-        System.out.println("ly_filemanager = " + ly_filemanager);
         ly_filemanager.setOnClickListener(new toolsClickListener());
     }
 
@@ -120,7 +119,8 @@ public class MainActivity extends Activity implements View.OnClickListener, View
                 }
                 switch (position) {
                     case 0:{
-                        Toast.makeText(MainActivity.this, "000", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, UserCenterActivity.class));
+                        overridePendingTransition(R.anim.slide_from_left, android.R.anim.fade_out);
                         break;
                     }
                     case 1:{
@@ -279,15 +279,15 @@ public class MainActivity extends Activity implements View.OnClickListener, View
             case 0:
                 imgTrans(tools);
                 setTextColor(tools);
-                System.out.println("tools selected");
+
                 break;
             case 1:
-                System.out.println("optimization selected");
+
                 imgTrans(opitmization);
                 setTextColor(opitmization);
                 break;
             case 2:
-                System.out.println("appmanager selected");
+
                 imgTrans(appmanager);
                 setTextColor(appmanager);
                 break;
