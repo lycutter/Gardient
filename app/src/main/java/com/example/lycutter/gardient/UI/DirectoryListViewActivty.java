@@ -34,7 +34,9 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
     public static final String defaultPath = "/sdcard";
     private DirectoryInfo directoryInfo;
     private DirectoryListAdapter directoryListAdapter;
-    File mFile;
+    private File mFile;
+    private String completedFileName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,8 +143,10 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
             viewHolder.directoryChildAmount = convertView.findViewById(R.id.directory_item_childamount);
 
             viewHolder.directoryName.setText(directoryName.get(position));
+            completedFileName = completedFilePath + directoryName.get(position);
+            mFile = new File(completedFileName);
 
-            mFile = new File(completedFilePath + directoryName.get(position));
+            String fileEnds = completedFileName.substring(completedFileName.lastIndexOf(".")+1, completedFileName.length()).toLowerCase();//取出文件后缀名并转成小写
 
             if (directoryName.contains("com.google.android.apps.nexuslaun")) {
                 System.out.println("long name = " + completedFilePath);
@@ -151,9 +155,26 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
 
             viewHolder.directoryChildAmount.setText(childAmount.get(position));
             if (!mFile.isDirectory()) {
-                viewHolder.directoryImage.setImageResource(R.drawable.file_image);
+//                viewHolder.directoryImage.setImageResource(R.drawable.file_image);
+                if(fileEnds.equals("m4a")||fileEnds.equals("mp3")||fileEnds.equals("mid")||fileEnds.equals("xmf")||fileEnds.equals("ogg")||fileEnds.equals("wav")){
+                    viewHolder.directoryImage.setImageResource(R.drawable.audio);
+                }else if(fileEnds.equals("3gp")||fileEnds.equals("mp4")){
+                    viewHolder.directoryImage.setImageResource(R.drawable.video);
+                }else if(fileEnds.equals("jpg")||fileEnds.equals("gif")||fileEnds.equals("png")||fileEnds.equals("jpeg")||fileEnds.equals("bmp")){
+                    viewHolder.directoryImage.setImageResource(R.drawable.image);
+                }else if(fileEnds.equals("apk")){
+                    viewHolder.directoryImage.setImageResource(R.drawable.apk);
+                }else if(fileEnds.equals("txt")){
+                    viewHolder.directoryImage.setImageResource(R.drawable.txt);
+                }else if(fileEnds.equals("zip")||fileEnds.equals("rar")){
+                    viewHolder.directoryImage.setImageResource(R.drawable.zip_icon);
+                }else if(fileEnds.equals("html")||fileEnds.equals("htm")||fileEnds.equals("mht")){
+                    viewHolder.directoryImage.setImageResource(R.drawable.web_browser);
+                }else {
+                    viewHolder.directoryImage.setImageResource(R.drawable.others);
+                }
             } else {
-                viewHolder.directoryImage.setImageResource(R.drawable.ic_dxhome_file_manager);
+                viewHolder.directoryImage.setImageResource(R.drawable.folder);
 
             }
             return convertView;
