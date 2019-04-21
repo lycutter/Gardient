@@ -89,43 +89,43 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
         directoryListAdapter = new DirectoryListAdapter(this, mDirectoryInfo, mDirectoryInfo.currentDirectory + "/");
         directoryListView.setAdapter(directoryListAdapter);
 
-        directoryListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                fileOperationListView = getLayoutInflater().inflate(R.layout.layout_fileoperation, null, true);
-                final PopupWindow fileOperationWindow = new PopupWindow(fileOperationListView, 300, 300);
-                fileOperationWindow.setFocusable(true);
-                fileOperationWindow.setOutsideTouchable(true);
-                fileOperationWindow.setBackgroundDrawable(new BitmapDrawable());
-                int[] windowPos = CalPopWindowLocation(view, parent);
-                fileOperationWindow.showAtLocation(fileOperationListView, Gravity.TOP | Gravity.START, windowPos[0], windowPos[1]);
-                mFileOperationListView = fileOperationListView.findViewById(R.id.lv_fileoperation);
-                fileOperationListAdapter = new FileLongClickListAdapter(DirectoryListViewActivty.this, fileOperationList);
-                mFileOperationListView.setAdapter(fileOperationListAdapter);
-                mFileOperationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        if (fileOperationWindow != null) {
-                            fileOperationWindow.dismiss();
-                        }
-                        switch (position) {
-                            case 0: {
-                                //复制文件
-                                break;
-                            }
-                            case 1: {
-                                //删除文件
-                            }
-                            case 2: {
-                                //剪切文件
-                            }
-                        }
-                    }
-                });
-                return true; // 返回true代表消费完了该事件，false代表没消费完
-            }
-        });
+//        directoryListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                fileOperationListView = getLayoutInflater().inflate(R.layout.layout_fileoperation, null, true);
+//                final PopupWindow fileOperationWindow = new PopupWindow(fileOperationListView, 300, 300);
+//                fileOperationWindow.setFocusable(true);
+//                fileOperationWindow.setOutsideTouchable(true);
+//                fileOperationWindow.setBackgroundDrawable(new BitmapDrawable());
+//                int[] windowPos = CalPopWindowLocation(view, parent);
+//                fileOperationWindow.showAtLocation(fileOperationListView, Gravity.TOP | Gravity.START, windowPos[0], windowPos[1]);
+//                mFileOperationListView = fileOperationListView.findViewById(R.id.lv_fileoperation);
+//                fileOperationListAdapter = new FileLongClickListAdapter(DirectoryListViewActivty.this, fileOperationList);
+//                mFileOperationListView.setAdapter(fileOperationListAdapter);
+//                mFileOperationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        if (fileOperationWindow != null) {
+//                            fileOperationWindow.dismiss();
+//                        }
+//                        switch (position) {
+//                            case 0: {
+//                                //复制文件
+//                                break;
+//                            }
+//                            case 1: {
+//                                //删除文件
+//                            }
+//                            case 2: {
+//                                //剪切文件
+//                            }
+//                        }
+//                    }
+//                });
+//                return true; // 返回true代表消费完了该事件，false代表没消费完
+//            }
+//        });
 
         directoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
