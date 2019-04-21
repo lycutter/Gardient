@@ -2,8 +2,11 @@ package com.example.lycutter.gardient.UI;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -11,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +23,7 @@ import com.example.lycutter.gardient.R;
 import java.io.File;
 import java.util.ArrayList;
 
+import Adapter.FileLongClickListAdapter;
 import entity.DirectoryInfo;
 import utils.FileScan;
 
@@ -28,7 +33,7 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
     private TextView canuseSDmemory;
     private ImageButton directoryReturn;
     private TextView currentDirectory;
-    private ListView directoryListView;
+    private ListView directoryListView;  //文件的listView
     private ImageButton back;
     private FileScan fileScan;
     public static final String defaultPath = "/sdcard";
@@ -36,14 +41,32 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
     private DirectoryListAdapter directoryListAdapter;
     private File mFile;
     private String completedFileName;
+    private ArrayList fileOperationList;  // 长按文件有什么操作
+    private ListView mFileOperationListView; //文件操作的listview
+    private View fileOperationListView; // 获取文件操作listView的布局
+    private FileLongClickListAdapter fileOperationListAdapter;
 
+    private int screenHeight;
+    private int screenWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_directory_list_view_activty);
-
         initView();
+
+        //设置监听
+        FileListener();
+    }
+
+    private void FileListener() {
+
+
+        fileOperationList = new ArrayList();
+        fileOperationList.add("复制文件");
+        fileOperationList.add("删除文件");
+        fileOperationList.add("剪切文件");
+
     }
 
     private void initView() {
@@ -65,6 +88,45 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
     private void createFileListView(final DirectoryInfo mDirectoryInfo) {
         directoryListAdapter = new DirectoryListAdapter(this, mDirectoryInfo, mDirectoryInfo.currentDirectory + "/");
         directoryListView.setAdapter(directoryListAdapter);
+
+        directoryListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                fileOperationListView = getLayoutInflater().inflate(R.layout.layout_fileoperation, null, true);
+                final PopupWindow fileOperationWindow = new PopupWindow(fileOperationListView, 300, 300);
+                fileOperationWindow.setFocusable(true);
+                fileOperationWindow.setOutsideTouchable(true);
+                fileOperationWindow.setBackgroundDrawable(new BitmapDrawable());
+                int[] windowPos = CalPopWindowLocation(view, parent);
+                fileOperationWindow.showAtLocation(fileOperationListView, Gravity.TOP | Gravity.START, windowPos[0], windowPos[1]);
+                mFileOperationListView = fileOperationListView.findViewById(R.id.lv_fileoperation);
+                fileOperationListAdapter = new FileLongClickListAdapter(DirectoryListViewActivty.this, fileOperationList);
+                mFileOperationListView.setAdapter(fileOperationListAdapter);
+                mFileOperationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        if (fileOperationWindow != null) {
+                            fileOperationWindow.dismiss();
+                        }
+                        switch (position) {
+                            case 0: {
+                                //复制文件
+                                break;
+                            }
+                            case 1: {
+                                //删除文件
+                            }
+                            case 2: {
+                                //剪切文件
+                            }
+                        }
+                    }
+                });
+                return true; // 返回true代表消费完了该事件，false代表没消费完
+            }
+        });
+
         directoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -80,13 +142,14 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
                 }
             }
         });
+
         currentDirectory.setText(mDirectoryInfo.currentDirectory);
     }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.back: {
                 finish();
                 break;
@@ -146,7 +209,7 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
             completedFileName = completedFilePath + directoryName.get(position);
             mFile = new File(completedFileName);
 
-            String fileEnds = completedFileName.substring(completedFileName.lastIndexOf(".")+1, completedFileName.length()).toLowerCase();//取出文件后缀名并转成小写
+            String fileEnds = completedFileName.substring(completedFileName.lastIndexOf(".") + 1, completedFileName.length()).toLowerCase();//取出文件后缀名并转成小写
 
             if (directoryName.contains("com.google.android.apps.nexuslaun")) {
                 System.out.println("long name = " + completedFilePath);
@@ -156,21 +219,21 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
             viewHolder.directoryChildAmount.setText(childAmount.get(position));
             if (!mFile.isDirectory()) {
 //                viewHolder.directoryImage.setImageResource(R.drawable.file_image);
-                if(fileEnds.equals("m4a")||fileEnds.equals("mp3")||fileEnds.equals("mid")||fileEnds.equals("xmf")||fileEnds.equals("ogg")||fileEnds.equals("wav")){
+                if (fileEnds.equals("m4a") || fileEnds.equals("mp3") || fileEnds.equals("mid") || fileEnds.equals("xmf") || fileEnds.equals("ogg") || fileEnds.equals("wav")) {
                     viewHolder.directoryImage.setImageResource(R.drawable.audio);
-                }else if(fileEnds.equals("3gp")||fileEnds.equals("mp4")){
+                } else if (fileEnds.equals("3gp") || fileEnds.equals("mp4")) {
                     viewHolder.directoryImage.setImageResource(R.drawable.video);
-                }else if(fileEnds.equals("jpg")||fileEnds.equals("gif")||fileEnds.equals("png")||fileEnds.equals("jpeg")||fileEnds.equals("bmp")){
+                } else if (fileEnds.equals("jpg") || fileEnds.equals("gif") || fileEnds.equals("png") || fileEnds.equals("jpeg") || fileEnds.equals("bmp")) {
                     viewHolder.directoryImage.setImageResource(R.drawable.image);
-                }else if(fileEnds.equals("apk")){
+                } else if (fileEnds.equals("apk")) {
                     viewHolder.directoryImage.setImageResource(R.drawable.apk);
-                }else if(fileEnds.equals("txt")){
+                } else if (fileEnds.equals("txt")) {
                     viewHolder.directoryImage.setImageResource(R.drawable.txt);
-                }else if(fileEnds.equals("zip")||fileEnds.equals("rar")){
+                } else if (fileEnds.equals("zip") || fileEnds.equals("rar")) {
                     viewHolder.directoryImage.setImageResource(R.drawable.zip_icon);
-                }else if(fileEnds.equals("html")||fileEnds.equals("htm")||fileEnds.equals("mht")){
+                } else if (fileEnds.equals("html") || fileEnds.equals("htm") || fileEnds.equals("mht")) {
                     viewHolder.directoryImage.setImageResource(R.drawable.web_browser);
-                }else {
+                } else {
                     viewHolder.directoryImage.setImageResource(R.drawable.others);
                 }
             } else {
@@ -186,4 +249,42 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
             public TextView directoryChildAmount;
         }
     }
+
+    /**
+     * 计算popwindow的弹出位置
+     * @param anchorView
+     * @param contentView
+     * @return
+     */
+    private int[] CalPopWindowLocation(View anchorView, View contentView) {
+
+        screenWidth = getApplicationContext().getResources().getDisplayMetrics().widthPixels;
+        screenHeight = getApplicationContext().getResources().getDisplayMetrics().heightPixels;
+
+        final int windowPos[] = new int[2];
+        final int anchorLoc[] = new int[2];
+        anchorView.getLocationOnScreen(anchorLoc);
+        final int anchorHeight = anchorView.getHeight();
+        // 获取屏幕的高宽
+
+        screenWidth = getApplicationContext().getResources().getDisplayMetrics().widthPixels;
+        screenHeight = getApplicationContext().getResources().getDisplayMetrics().heightPixels;
+        contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        // 计算contentView的高宽
+        final int windowHeight = contentView.getMeasuredHeight();
+        final int windowWidth = contentView.getMeasuredWidth();
+        // 判断需要向上弹出还是向下弹出显示
+        final boolean isNeedShowUp = (screenHeight - anchorLoc[1] - anchorHeight < windowHeight);
+        if (isNeedShowUp) {
+            windowPos[0] = screenWidth - windowWidth;
+            windowPos[1] = anchorLoc[1] - windowHeight;
+        } else {
+            windowPos[0] = screenWidth - windowWidth;
+            windowPos[1] = anchorLoc[1] + anchorHeight;
+        }
+        return windowPos;
+
+    }
 }
+
+
