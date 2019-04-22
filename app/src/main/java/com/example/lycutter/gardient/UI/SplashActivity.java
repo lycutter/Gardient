@@ -20,8 +20,6 @@ public class SplashActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_splash);
 
-        //获取读取SD卡的权限
-        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
 
         new Handler().postDelayed(new Runnable() {
             @Override

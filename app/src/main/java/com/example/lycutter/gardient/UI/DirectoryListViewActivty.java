@@ -2,27 +2,24 @@ package com.example.lycutter.gardient.UI;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.lycutter.gardient.R;
-
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
-
 import Adapter.FileLongClickListAdapter;
 import entity.DirectoryInfo;
 import utils.FileScan;
@@ -41,33 +38,27 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
     private DirectoryListAdapter directoryListAdapter;
     private File mFile;
     private String completedFileName;
-    private ArrayList fileOperationList;  // 长按文件有什么操作
-    private ListView mFileOperationListView; //文件操作的listview
-    private View fileOperationListView; // 获取文件操作listView的布局
     private FileLongClickListAdapter fileOperationListAdapter;
+    private LinearLayout mFileOperationList; //文件操作菜单
+    private LinearLayout copyFile;
+    private LinearLayout deleteFile;
+    private LinearLayout pasteFile;
 
-    private int screenHeight;
-    private int screenWidth;
+    private String mOldFilePath = "";
+    private String mNewFilePath = "";
+    private String mCurrentFile;
+    private static FileInputStream mFileInputStream;
+    private static FileOutputStream mFileOutputStream;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_directory_list_view_activty);
         initView();
-
-        //设置监听
-        FileListener();
     }
 
-    private void FileListener() {
 
-
-        fileOperationList = new ArrayList();
-        fileOperationList.add("复制文件");
-        fileOperationList.add("删除文件");
-        fileOperationList.add("剪切文件");
-
-    }
 
     private void initView() {
         canusememory = findViewById(R.id.canusemenmery);
@@ -76,9 +67,16 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
         directoryReturn = findViewById(R.id.dialog_save_turnback);
         currentDirectory = findViewById(R.id.dialog_save_path);
         directoryListView = findViewById(R.id.dir_listview);
+        mFileOperationList = findViewById(R.id.file_operation_list);
+        copyFile = mFileOperationList.findViewById(R.id.ll_copy_file);
+        deleteFile = mFileOperationList.findViewById(R.id.ll_delete_file);
+        pasteFile = mFileOperationList.findViewById(R.id.ll_paste_file);
 
         back.setOnClickListener(this);
         directoryReturn.setOnClickListener(this);
+        copyFile.setOnClickListener(this);
+        deleteFile.setOnClickListener(this);
+        pasteFile.setOnClickListener(this);
 
         fileScan = new FileScan();
         final DirectoryInfo mDirectoryInfo = fileScan.getFileDirectory(defaultPath);
@@ -88,45 +86,23 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
     private void createFileListView(final DirectoryInfo mDirectoryInfo) {
         directoryListAdapter = new DirectoryListAdapter(this, mDirectoryInfo, mDirectoryInfo.currentDirectory + "/");
         directoryListView.setAdapter(directoryListAdapter);
+        directoryListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
-//        directoryListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                fileOperationListView = getLayoutInflater().inflate(R.layout.layout_fileoperation, null, true);
-//                final PopupWindow fileOperationWindow = new PopupWindow(fileOperationListView, 300, 300);
-//                fileOperationWindow.setFocusable(true);
-//                fileOperationWindow.setOutsideTouchable(true);
-//                fileOperationWindow.setBackgroundDrawable(new BitmapDrawable());
-//                int[] windowPos = CalPopWindowLocation(view, parent);
-//                fileOperationWindow.showAtLocation(fileOperationListView, Gravity.TOP | Gravity.START, windowPos[0], windowPos[1]);
-//                mFileOperationListView = fileOperationListView.findViewById(R.id.lv_fileoperation);
-//                fileOperationListAdapter = new FileLongClickListAdapter(DirectoryListViewActivty.this, fileOperationList);
-//                mFileOperationListView.setAdapter(fileOperationListAdapter);
-//                mFileOperationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        if (fileOperationWindow != null) {
-//                            fileOperationWindow.dismiss();
-//                        }
-//                        switch (position) {
-//                            case 0: {
-//                                //复制文件
-//                                break;
-//                            }
-//                            case 1: {
-//                                //删除文件
-//                            }
-//                            case 2: {
-//                                //剪切文件
-//                            }
-//                        }
-//                    }
-//                });
-//                return true; // 返回true代表消费完了该事件，false代表没消费完
-//            }
-//        });
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)mFileOperationList.getLayoutParams(); //记得要强转类型
+                params.height = 200;
+                mFileOperationList.setLayoutParams(params);
+                mCurrentFile = mDirectoryInfo.currentDirectory + "/" + mDirectoryInfo.directoryName.get(position);
+                mOldFilePath = mDirectoryInfo.currentDirectory;
+                System.out.println("currentFileName = " + mDirectoryInfo.directoryName.get(position));
+                System.out.println("mCurrentFile = " + mCurrentFile);
+                System.out.println("mOldFilePath = " + mOldFilePath);
+                return true;
+            }
+        });
 
+        mNewFilePath = mDirectoryInfo.currentDirectory;
         directoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -148,7 +124,7 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
 
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v){
         switch (v.getId()) {
             case R.id.back: {
                 finish();
@@ -159,9 +135,26 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
                     directoryInfo = fileScan.getFileDirectory(directoryInfo.fatherDirectory);
                     createFileListView(directoryInfo);
                 }
+                break;
+            }
+            case R.id.ll_copy_file: {
+                CopyOperation();
+                break;
+            }
+            case R.id.ll_delete_file: {
+                DeleteOperation();
+                break;
+            }
+            case R.id.ll_paste_file: {
+                try{
+                    PasteOperation();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 break;
             }
+
         }
     }
 
@@ -250,39 +243,122 @@ public class DirectoryListViewActivty extends Activity implements View.OnClickLi
         }
     }
 
-    /**
-     * 计算popwindow的弹出位置
-     * @param anchorView
-     * @param contentView
-     * @return
-     */
-    private int[] CalPopWindowLocation(View anchorView, View contentView) {
 
-        screenWidth = getApplicationContext().getResources().getDisplayMetrics().widthPixels;
-        screenHeight = getApplicationContext().getResources().getDisplayMetrics().heightPixels;
 
-        final int windowPos[] = new int[2];
-        final int anchorLoc[] = new int[2];
-        anchorView.getLocationOnScreen(anchorLoc);
-        final int anchorHeight = anchorView.getHeight();
-        // 获取屏幕的高宽
-
-        screenWidth = getApplicationContext().getResources().getDisplayMetrics().widthPixels;
-        screenHeight = getApplicationContext().getResources().getDisplayMetrics().heightPixels;
-        contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        // 计算contentView的高宽
-        final int windowHeight = contentView.getMeasuredHeight();
-        final int windowWidth = contentView.getMeasuredWidth();
-        // 判断需要向上弹出还是向下弹出显示
-        final boolean isNeedShowUp = (screenHeight - anchorLoc[1] - anchorHeight < windowHeight);
-        if (isNeedShowUp) {
-            windowPos[0] = screenWidth - windowWidth;
-            windowPos[1] = anchorLoc[1] - windowHeight;
+    private void CopyOperation() {
+        File file = new File(mCurrentFile);
+        if (file.isFile()) {
+            Toast.makeText(DirectoryListViewActivty.this, "复制了文件", Toast.LENGTH_SHORT).show();
+            CopyFile(mCurrentFile);
         } else {
-            windowPos[0] = screenWidth - windowWidth;
-            windowPos[1] = anchorLoc[1] + anchorHeight;
+            Toast.makeText(DirectoryListViewActivty.this, "失败", Toast.LENGTH_SHORT).show();
+            CopyDirectory(mCurrentFile);
         }
-        return windowPos;
+    }
+
+    private void PasteOperation() throws Exception{
+        File file = new File(mCurrentFile);
+        if (file.isFile()) {
+            PasteFile(mCurrentFile);
+        } else {
+            PasteDirectory(mCurrentFile);
+        }
+    }
+
+    private void CopyFile(String mCurrentFile) {
+        mFileInputStream = null;
+        try {
+            mFileInputStream = new FileInputStream(mCurrentFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("复制文件失败");
+        }
+
+        if (mFileInputStream == null) {
+            Toast.makeText(DirectoryListViewActivty.this, "复制文件失败", Toast.LENGTH_SHORT).show();
+            return;
+        }
+    }
+
+    private void CopyDirectory(String mCurrentFile) {
+
+    }
+
+    private void PasteFile(String mCurrentFile) throws Exception{
+
+        String fileName = mCurrentFile.substring(mCurrentFile.lastIndexOf("/") + 1);
+
+
+        String newFileAbsolutePath = mNewFilePath + "/" + fileName;
+        File file = new File(newFileAbsolutePath);
+
+        System.out.println("当前绝对路径是" + file.getAbsolutePath());
+        if (file.exists()) {
+            Toast.makeText(DirectoryListViewActivty.this, "文件已存在", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            try {
+                mFileOutputStream = new FileOutputStream(file.getAbsoluteFile());
+            } catch (FileNotFoundException e) {
+                System.out.println(e);
+                System.out.println("FileOutputStream抛出异常");
+            }
+            int byteRead;
+            int byteSum = 0;
+            byte[] buffer = new byte[1024];
+
+            System.out.println("正在写入新文件");
+            while ((byteRead = mFileInputStream.read(buffer)) != -1) {
+                byteSum += byteRead; //字节数 文件大小
+                System.out.println(byteSum);
+                mFileOutputStream.write(buffer, 0, byteRead);
+                System.out.println("正在写入");
+            }
+            mFileInputStream.close();
+            mFileOutputStream.flush();
+            mFileOutputStream.close();
+
+            createFileListView(fileScan.getFileDirectory(mNewFilePath));
+            directoryListAdapter.notifyDataSetChanged();
+            directoryListView.invalidateViews();
+
+            Toast.makeText(DirectoryListViewActivty.this, "粘贴完成", Toast.LENGTH_SHORT).show();
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)mFileOperationList.getLayoutParams(); //记得要强转类型
+            params.height = 0;
+            mFileOperationList.setLayoutParams(params);
+        }
+
+    }
+
+    private void PasteDirectory(String mCurrentFile) {
+
+    }
+
+    private void DeleteOperation() {
+        File file = new File(mCurrentFile);
+        if (file.isFile()) {
+            DeleteFile(mCurrentFile);
+        } else {
+            DeleteDirectory(mCurrentFile);
+        }
+    }
+
+    private void DeleteFile(String mCurrentFile) {
+        File currentFile = new File(mCurrentFile);
+        createFileListView(fileScan.getFileDirectory(mCurrentFile.substring(mCurrentFile.lastIndexOf("/") + 1)));
+        if (currentFile.delete()) {
+            Toast.makeText(DirectoryListViewActivty.this, "删除文件成功", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(DirectoryListViewActivty.this, "删除文件失败", Toast.LENGTH_SHORT).show();
+        }
+
+        Toast.makeText(DirectoryListViewActivty.this, "粘贴完成", Toast.LENGTH_SHORT).show();
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)mFileOperationList.getLayoutParams(); //记得要强转类型
+        params.height = 0;
+        mFileOperationList.setLayoutParams(params);
+    }
+
+    private void DeleteDirectory(String mCurrentFile) {
 
     }
 }

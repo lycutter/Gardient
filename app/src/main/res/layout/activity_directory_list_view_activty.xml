@@ -118,8 +118,9 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/file_operation_list"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="0dp">
 
         <LinearLayout
             android:id="@+id/ll_copy_file"
@@ -127,11 +128,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginLeft="100dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:clickable="true"
+            android:background="@drawable/btn_login_selector">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
                 android:src="@drawable/copy_file_image"/>
 
             <TextView
@@ -148,12 +152,15 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="50dp">
+            android:layout_marginLeft="50dp"
+            android:clickable="true"
+            android:background="@drawable/btn_login_selector">
 
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
                 android:src="@drawable/delete_file_image"/>
 
             <TextView
@@ -165,17 +172,20 @@
 
 
         <LinearLayout
-            android:id="@+id/ll_file_paste"
+            android:id="@+id/ll_paste_file"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="50dp">
+            android:layout_marginLeft="50dp"
+            android:clickable="true"
+            android:background="@drawable/btn_login_selector">
 
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
                 android:src="@drawable/file_paste_image"/>
 
             <TextView
